@@ -196,7 +196,7 @@ sendingProgressHandler:(NXOAuth2ConnectionSendingProgressHandler)aSendingProgres
     if (client.acceptType) {
         [startRequest setValue:client.acceptType forHTTPHeaderField:@"Accept"];
     }
-    
+    NSLog(@"%@",[self requestToString:startRequest]);
     NSURLConnection *aConnection = [[NSURLConnection alloc] initWithRequest:startRequest delegate:self startImmediately:NO];    // don't start yet
     [aConnection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];    // let's first schedule it in the current runloop. (see http://github.com/soundcloud/cocoa-api-wrapper/issues#issue/2 )
     [aConnection start];    // now start
@@ -205,6 +205,12 @@ sendingProgressHandler:(NXOAuth2ConnectionSendingProgressHandler)aSendingProgres
     sendConnectionDidEndNotification = YES;
     
     return aConnection;
+}
+
+
+- (NSString *)requestToString:(NSURLRequest *)aRequest;
+{
+    return [NSString stringWithFormat:@"%@[%@] \n%@", aRequest.URL.absoluteString,aRequest.HTTPMethod, aRequest.allHTTPHeaderFields];
 }
 
 - (NSString *)descriptionForRequest:(NSURLRequest *)aRequest;
