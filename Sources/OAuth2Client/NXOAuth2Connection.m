@@ -208,9 +208,8 @@ sendingProgressHandler:(NXOAuth2ConnectionSendingProgressHandler)aSendingProgres
 }
 
 
-- (NSString *)requestToString:(NSURLRequest *)aRequest;
-{
-    return [NSString stringWithFormat:@"%@[%@] \n%@", aRequest.URL.absoluteString,aRequest.HTTPMethod, aRequest.allHTTPHeaderFields];
+- (NSString *)requestToString:(NSURLRequest *)aRequest;{
+    return [NSString stringWithFormat:@"%@[%@] \n%@\n%@", aRequest.URL.absoluteString,aRequest.HTTPMethod, aRequest.allHTTPHeaderFields,[[NSString alloc] initWithData:aRequest.HTTPBody encoding:NSUTF8StringEncoding]];
 }
 
 - (NSString *)descriptionForRequest:(NSURLRequest *)aRequest;
